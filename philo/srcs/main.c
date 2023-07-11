@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 12:55:46 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/10 22:30:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/11 23:17:15 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,46 +20,72 @@ void	invalid_nbr_arg()
 The [number_of_times_each_philosoppher_must_eat] is not mandatory!\n");
 	exit(1);
 }
-t_input	input_validation(int argc, char **argv)
+void	malloc_error()
 {
-	t_input	input;
+	printf("Error: Malloc has failed!");
+		exit(1);
+}
+
+long	time(void)
+{
+	struct timeval	current_time;
+	long			milliseconds;
+
+	gettimeofday(&current_time, NULL);
+	milliseconds = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+	return (milliseconds);
+}
+
+int	validate_input(char *input)
+{
+	int	i;
+	int	nbr;
+	
+	i = 0;
+	while(input[i])
+	{
+		if (i == 0 && (input[i] == '-' || input[i] == '+'))
+			i++;
+		if (ft_isdigit(input[i]) == 0)
+		{
+			printf("Error: Input should contain only integers!");
+			exit(1);
+		}
+		i++;
+	}
+	nbr = ft_atoi(input);
+	if (nbr <= 0)
+	{
+		printf("Error: Input should only containt positive integers!");
+		exit(1);
+	}
+	return (nbr);
+}
+
+void	init_input(t_input *input, char **argv)
+{
 	int		i;
-	int		j;
 
 	i = 1;
 	while (argv[i])
 	{
-		j = 0;
-		while(argv[i][j])
-		{
-			if (j == 0 && (argv[i][j] == '-' || argv[i][j] == '+'))
-				j++;
-			if (ft_isdigit(argv[i][j]) == 0)
-			{
-				printf("Error: Input should contain only integers!");
-				exit(1);
-			}
 			if (i == 1)
-				input.nbr_philo = ft_atoi(argv[i]);
-			if (i == 2)
-				input.die_time = ft_atoi(argv[i]);
-			if (i == 3)
-				input.eat_time = ft_atoi(argv[i]);
-			if (i == 4)
-				input.sleep_time = ft_atoi(argv[i]);
-			if (i == 5)
-				input.nbr_philo_eats = ft_atoi(argv[i]);
-			j++;
-		}
-		i++;
+				input->nbr_philo = validate_input(argv[i]);
+			else if (i == 2)
+				input->die_time = validate_input(argv[i]);
+			else if (i == 3)
+				input->eat_time = validate_input(argv[i]);
+			else if (i == 4)
+				input->sleep_time = validate_input(argv[i]);
+			else if (i == 5)
+				input->nbr_philo_eats = validate_input(argv[i]);
+			i++;
 	}
-	if (input.nbr_philo <= 0 || input.die_time <= 0 || input.eat_time <= 0
-	|| input.sleep_time <= 0 || (argc == 6 && input.nbr_philo_eats <= 0))
-		{
-			printf("Error: Input should only containt positive integers!");
-			exit(1);
-		}
-	return (input);
+	input->start = time();
+	input->end = 0;
+	input->philo = malloc(sizeof(t_philo) * input->nbr_philo);
+	if (input->philo == NULL)
+		malloc_error();
 }
 
 int main(int argc, char **argv)
@@ -68,7 +94,9 @@ int main(int argc, char **argv)
 
 	if (argc == 5 || argc == 6)
 	{
-		input = input_validation(argc, argv);
+		init_input(&input, argv);
+		pthread_mutex_init(&input.mutex, NULL); //change the name!!!
+		// init_fork(&input);
 		// printf("%d   %d  %d   %d  %d\n", input.nbr_philo, input.die_time, input.eat_time, input.sleep_time, input.nbr_philo_eats);
 		write(1, "correct\n", 8);
 	}

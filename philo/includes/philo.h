@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:50:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/10 17:20:05 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/11 18:42:05 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <sys/time.h>
+
+typedef struct s_philo
+{
+
+}	t_philo;	
 
 typedef	struct s_input
 {
@@ -30,6 +36,12 @@ typedef	struct s_input
 	int eat_time;
 	int	sleep_time;
 	int nbr_philo_eats;
+	int start;
+	int end;
+
+	t_philo	*philo;
+
+	pthread_mutex_t	mutex;
 }	t_input;
 
 /* utils */
