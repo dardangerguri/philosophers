@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:50:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/11 18:42:05 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/07/13 16:30:54 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+typedef struct s_input	t_input;
+
 typedef struct s_philo
 {
+	pthread_t		philo;
+	int				right_fork;
+	int				left_fork;
 
-}	t_philo;	
+	t_input			*input;
+}	t_philo;
 
 typedef	struct s_input
 {
@@ -47,5 +53,14 @@ typedef	struct s_input
 /* utils */
 int	ft_isdigit(int c);
 int	ft_atoi(const char *str);
+
+long	get_time(void); //put another place
+
+/* validate */
+int	validate_input(char *input);
+
+/* error */
+void	invalid_nbr_arg();
+void	malloc_error();
 
 #endif

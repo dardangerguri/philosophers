@@ -6,7 +6,7 @@
 #    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/10 16:24:12 by dgerguri          #+#    #+#              #
-#    Updated: 2023/07/10 22:29:44 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/07/13 14:56:55 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,10 @@ INCLUDE = -I ./includes/
 SRC_DIR = ./srcs/
 
 SRC =	main.c \
-		utils.c
+		utils.c \
+		validate.c \
+		error.c
+
 
 
 OBJ_DIR = obj/
