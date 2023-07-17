@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
+#    By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/10 16:24:12 by dgerguri          #+#    #+#              #
-#    Updated: 2023/07/13 14:56:55 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/07/14 19:07:52 by dardangergu      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC_DIR = ./srcs/
 SRC =	main.c \
 		utils.c \
 		validate.c \
-		error.c
+		error.c \
+		init.c
 
 
 
