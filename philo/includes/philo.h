@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:50:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/18 14:50:28 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/21 17:01:44 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ typedef	struct s_input
 
 	t_mutex	*fork_mutex;
 	t_mutex	last_meal;
+	t_mutex	dead_philo;
+	t_mutex	print;
+
 	int start;
-	int dead_philo;
+	int died;
 
 	t_philo	*philo;
 

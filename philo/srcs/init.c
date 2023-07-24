@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:07:55 by dardangergu       #+#    #+#             */
-/*   Updated: 2023/07/18 14:55:56 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/21 17:01:27 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	init_philo(t_input *input)
 		malloc_error();
 	init_fork(input);
 	pthread_mutex_init(&input->last_meal, NULL);
+	pthread_mutex_init(&input->dead_philo, NULL);
+	pthread_mutex_init(&input->print, NULL);
 	while (i < input->nbr_philo)
 	{
 		input->philo[i].input = input;
@@ -76,5 +78,5 @@ void	init_input(t_input *input, char **argv)
 	}
 	init_philo(input);
 	input->start = get_time();
-	input->dead_philo = 0;
+	input->died = 0;
 }
