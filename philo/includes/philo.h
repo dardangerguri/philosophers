@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:50:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/21 17:01:44 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/07/24 17:07:15 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ typedef	struct s_input
 	int	sleep_time;
 	int nbr_philo_eats;
 
+	long start;
+	int died;
+
 	t_mutex	*fork_mutex;
 	t_mutex	last_meal;
 	t_mutex	dead_philo;
 	t_mutex	print;
-
-	int start;
-	int died;
 
 	t_philo	*philo;
 
@@ -74,6 +74,6 @@ void	invalid_nbr_arg();
 void	malloc_error();
 
 /* init */
-void	init_input(t_input *input, char **argv);
+int	init_input(t_input *input, char **argv);
 
 #endif

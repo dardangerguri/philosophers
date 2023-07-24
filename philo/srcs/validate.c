@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 14:54:00 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/13 14:54:50 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:12:45 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	validate_input(char *input)
 		if (ft_isdigit(input[i]) == 0)
 		{
 			printf("Error: Input should contain only integers!");
-			exit(1);
+			return(-1);
 		}
 		i++;
 	}
@@ -33,7 +33,7 @@ int	validate_input(char *input)
 	if (nbr <= 0)
 	{
 		printf("Error: Input should only containt positive integers!");
-		exit(1);
+		return(-1);
 	}
 	return (nbr);
 }
