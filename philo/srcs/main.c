@@ -6,11 +6,20 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 12:55:46 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/24 17:57:53 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/26 20:30:25 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	put_to_sleep(int time)
+{
+	int	starting_time;
+
+	starting_time = get_time();
+	while ((get_time() - starting_time) < time)
+		usleep(time);
+}
 
 void	print_action(char *message, t_philo *philo)
 {
@@ -20,6 +29,12 @@ void	print_action(char *message, t_philo *philo)
 		printf("%ld %d %s\n", get_time() - philo->input->start, philo->id, message);
 	pthread_mutex_unlock(&philo->input->print);
 	pthread_mutex_unlock(&philo->input->dead_philo);
+}
+
+void	sleeps(t_philo *philo)
+{
+	print_action("is sleeping", philo);
+	put_to_sleep(philo->input->sleep_time);
 }
 
 int	take_forks(t_philo *philo)
@@ -59,27 +74,14 @@ void	eats(t_philo *philo)
 	pthread_mutex_lock(&philo->input->last_meal);
 	philo->last_meal = philo->input->start;
 	pthread_mutex_unlock(&philo->input->last_meal);
-}
-
-void	put_to_sleep(t_philo *philo)
-{
-	int	starting_time;
-
-	starting_time = get_time();
-	while ((get_time() - starting_time) < philo->input->sleep_time)
-		usleep(100);
-}
-
-void	sleeps(t_philo *philo)
-{
-	print_action("is sleeping", philo);
-	put_to_sleep(philo);
+	put_to_sleep(philo->input->eat_time);
+	pthread_mutex_unlock(&philo->input->fork_mutex[philo->right_fork]);
+	pthread_mutex_unlock(&philo->input->fork_mutex[philo->left_fork]);
 }
 
 void	thinks(t_philo *philo)
 {
 	print_action("is thinking", philo);
-	put_to_sleep(philo);
 }
 
 void	*simulation(void *p)
@@ -88,6 +90,7 @@ void	*simulation(void *p)
 
 	philo = (t_philo *)p;
 	pthread_mutex_lock(&philo->input->last_meal);
+	philo->ate += 1;
 	philo->last_meal = get_time() - philo->input->start;
 	pthread_mutex_unlock(&philo->input->last_meal);
 	////// MIA SYNCRONIZES EVRYTHING sim_start_delay(philo->table->start_time);
@@ -95,10 +98,22 @@ void	*simulation(void *p)
 	// {
 	// 	//only one philo !!! DO IT LATER
 	// }
+	// pthread_mutex_lock(&philo->input->print);
+	// printf("The philo: %d\n", philo->id);
+	// pthread_mutex_unlock(&philo->input->print);
 	if (philo->id % 2 == 0)
-		usleep(1);
-	while (philo->input->died == 0)
+		usleep(200);
+	while (1)
 	{
+		pthread_mutex_lock(&philo->input->dead_philo);
+		if (philo->input->died == 1)
+		{
+			pthread_mutex_unlock(&philo->input->dead_philo);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->input->dead_philo);
+		if (philo->input->eat_time > 0 && philo->ate == philo->input->eat_time) //can put this inside the other if check
+			break;
 		take_forks(philo);
 		eats(philo);
 		sleeps(philo);
@@ -112,13 +127,16 @@ void	start_simulation(t_input *input)
 	int	i;
 
 	i = 0;
-	while (i++ <= input->nbr_philo)
+	while (i < input->nbr_philo)
 	{
 		pthread_create(&input->philo[i].philo, NULL, &simulation, &input->philo[i]);
+		i++;
 	}
-	if (input->nbr_philo > 1)
+	i = 0;
+	while (i < input->nbr_philo)
 	{
-		input->died = 1; //change this!!
+		pthread_join(input->philo[i].philo, NULL);
+		i++;
 	}
 }
 

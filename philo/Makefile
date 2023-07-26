@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+         #
+#    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/10 16:24:12 by dgerguri          #+#    #+#              #
-#    Updated: 2023/07/14 19:07:52 by dardangergu      ###   ########.fr        #
+#    Updated: 2023/07/26 16:05:39 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=address
 
 INCLUDE = -I ./includes/
 
