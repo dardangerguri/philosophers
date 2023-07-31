@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 14:55:18 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/24 16:02:04 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/27 23:09:35 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,17 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return ((int)result * (int)sign);
+}
+
+int	check_death(t_philo	*philo)
+{
+	pthread_mutex_lock(&philo->input->dead_philo);
+	if (philo->input->died == 1)
+	{
+		pthread_mutex_unlock(&philo->input->dead_philo);
+		return (1);
+	}
+	else
+		pthread_mutex_unlock(&philo->input->dead_philo);
+	return(0);
 }

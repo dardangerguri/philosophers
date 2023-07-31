@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 12:55:46 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/26 20:30:25 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:31:12 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	take_forks(t_philo *philo)
 		pthread_mutex_lock(&philo->input->fork_mutex[philo->right_fork]);
 	else
 		pthread_mutex_lock(&philo->input->fork_mutex[philo->left_fork]);
-	if (philo->input->died == 0)
+	if (check_death(philo) == 0)
 		print_action("has taken a fork", philo);
 	if (philo->id % 2 == 0)
 	{
@@ -52,7 +52,7 @@ int	take_forks(t_philo *philo)
 			pthread_mutex_unlock(&philo->input->fork_mutex[philo->right_fork]);
 			return (0);
 		}
-		if (philo->input->died == 0)
+		if (check_death(philo) == 0)
 			print_action("has taken a fork", philo);
 	}
 	else
@@ -62,7 +62,7 @@ int	take_forks(t_philo *philo)
 			pthread_mutex_unlock(&philo->input->fork_mutex[philo->left_fork]);
 			return (0);
 		}
-		if (philo->input->died == 0)
+		if (check_death(philo) == 0)
 			print_action("has taken a fork", philo);
 	}
 	return (0);
@@ -72,9 +72,12 @@ void	eats(t_philo *philo)
 {
 	print_action("is eating", philo);
 	pthread_mutex_lock(&philo->input->last_meal);
-	philo->last_meal = philo->input->start;
+	philo->last_meal = get_time() - philo->input->start;
+	philo->input->die_time = philo->last_meal + philo->input->die_time;
 	pthread_mutex_unlock(&philo->input->last_meal);
 	put_to_sleep(philo->input->eat_time);
+	if (philo->input->nbr_philo_eats != 0)
+
 	pthread_mutex_unlock(&philo->input->fork_mutex[philo->right_fork]);
 	pthread_mutex_unlock(&philo->input->fork_mutex[philo->left_fork]);
 }
@@ -105,22 +108,24 @@ void	*simulation(void *p)
 		usleep(200);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->input->dead_philo);
-		if (philo->input->died == 1)
-		{
-			pthread_mutex_unlock(&philo->input->dead_philo);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->input->dead_philo);
+		if (check_death(philo) == 1)
+			break;
 		if (philo->input->eat_time > 0 && philo->ate == philo->input->eat_time) //can put this inside the other if check
 			break;
 		take_forks(philo);
+		if (check_death(philo) == 1)
+		{
+			pthread_mutex_unlock(&philo->input->fork_mutex[philo->right_fork]);
+			pthread_mutex_unlock(&philo->input->fork_mutex[philo->left_fork]);
+			break;
+		}
 		eats(philo);
 		sleeps(philo);
 		thinks(philo);
 	}
 	return(NULL);
 }
+
 
 void	start_simulation(t_input *input)
 {
@@ -132,6 +137,7 @@ void	start_simulation(t_input *input)
 		pthread_create(&input->philo[i].philo, NULL, &simulation, &input->philo[i]);
 		i++;
 	}
+	philo_monitoring(input);
 	i = 0;
 	while (i < input->nbr_philo)
 	{

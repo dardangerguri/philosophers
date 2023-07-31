@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:50:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/24 17:07:15 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/27 23:09:53 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ typedef	struct s_input
 /* utils */
 int	ft_isdigit(int c);
 int	ft_atoi(const char *str);
+
+int	check_death(t_philo	*philo); // change place
 
 long	get_time(void); //put another place
 
