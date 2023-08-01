@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:50:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/27 23:09:53 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/07/31 19:07:27 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,13 @@ void	malloc_error();
 
 /* init */
 int	init_input(t_input *input, char **argv);
+
+/* simulation */
+void	*simulation(void *p);
+
+
+/*------*/
+void	print_action(char *message, t_philo *philo);
+void	put_to_sleep(int time, t_philo *philo);
 
 #endif

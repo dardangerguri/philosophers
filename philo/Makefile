@@ -6,14 +6,14 @@
 #    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/10 16:24:12 by dgerguri          #+#    #+#              #
-#    Updated: 2023/07/26 16:05:39 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/08/01 18:04:54 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=thread -g3
 
 INCLUDE = -I ./includes/
 
@@ -23,7 +23,8 @@ SRC =	main.c \
 		utils.c \
 		validate.c \
 		error.c \
-		init.c
+		init.c \
+		simulation.c
 
 
 
