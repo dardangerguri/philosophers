@@ -6,25 +6,26 @@
 #    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/10 16:24:12 by dgerguri          #+#    #+#              #
-#    Updated: 2023/08/01 18:04:54 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/08/02 19:49:11 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=thread -g3
+FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g3
 
 INCLUDE = -I ./includes/
 
 SRC_DIR = ./srcs/
 
 SRC =	main.c \
+		initialization.c \
+		validation.c \
+		simulation.c \
+		monitoring.c \
 		utils.c \
-		validate.c \
 		error.c \
-		init.c \
-		simulation.c
 
 
 

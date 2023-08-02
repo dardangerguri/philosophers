@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 14:55:18 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/31 18:16:48 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/02 19:40:47 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,42 +22,26 @@ long	get_time(void)
 	return (milliseconds);
 }
 
+static long	get_time_now(t_philo *ph)
 
-
-int	ft_isdigit(int c)
 {
-	if (c > 47 && c < 58)
-		return (1);
-	else
-		return (0);
+	long	start_program;
+
+	start_program = ph->input->start;
+	return (get_time() - start_program);
 }
 
-int	ft_atoi(const char *str)
+void	put_to_sleep(int time, t_philo *philo)
 {
-	int		i;
-	long	sign;
-	long	result;
+	long	start_time;
 
-	i = 0;
-	sign = 1;
-	result = 0;
-	while ((str[i] > 8 && str[i] < 14) || str[i] == 32)
-		i++;
-	if (str[i] == '-')
-		sign = -1;
-	if (str[i] == '+' || str[i] == '-')
-		i++;
-	while (str[i] != '\0' && str[i] > 47 && str[i] < 58)
+	start_time = get_time_now(philo);
+	while (get_time_now(philo) - start_time < time)
 	{
-		if (result * sign > 2147483647)
-			return (-1);
-		if (result * sign < -2147483648)
-			return (0);
-		else
-			result = result * 10 + str[i] - '0';
-		i++;
+		if (check_death(philo) == 1)
+			break ;
+		usleep(300);
 	}
-	return ((int)result * (int)sign);
 }
 
 int	check_death(t_philo	*philo)
@@ -70,5 +54,16 @@ int	check_death(t_philo	*philo)
 	}
 	else
 		pthread_mutex_unlock(&philo->input->dead_philo);
-	return(0);
+	return (0);
+}
+
+void	print_action(char *message, t_philo *philo)
+{
+	pthread_mutex_lock(&philo->input->dead_philo);
+	pthread_mutex_lock(&philo->input->print);
+	if (philo->input->died == 0)
+		printf("%ld %d %s\n",
+			get_time() - philo->input->start, philo->id, message);
+	pthread_mutex_unlock(&philo->input->print);
+	pthread_mutex_unlock(&philo->input->dead_philo);
 }
