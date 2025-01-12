@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 14:55:18 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/02 19:40:47 by dgerguri         ###   ########.fr       */
+/*   Updated: 2025/01/12 22:47:51 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_action(char *message, t_philo *philo)
 	pthread_mutex_lock(&philo->input->dead_philo);
 	pthread_mutex_lock(&philo->input->print);
 	if (philo->input->died == 0)
-		printf("%ld %d %s\n",
+		printf("[%ld] %d %s\n",
 			get_time() - philo->input->start, philo->id, message);
 	pthread_mutex_unlock(&philo->input->print);
 	pthread_mutex_unlock(&philo->input->dead_philo);

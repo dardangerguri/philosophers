@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:50:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/02 19:34:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2025/01/12 22:46:46 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+
+# define RED "\033[31m"
+# define YELLOW "\033[33m"
+# define BLUE "\033[34m"
+# define GREEN "\033[32m"
+# define RESET "\033[0m"
 
 # include <unistd.h>
 # include <stdio.h>

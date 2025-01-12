@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 16:01:03 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/02 19:01:00 by dgerguri         ###   ########.fr       */
+/*   Updated: 2025/01/12 22:45:24 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static void	eats(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->input->fork_mutex[philo->right_fork]);
-	print_action("has taken a fork", philo);
+	print_action("\033[33mhas taken a fork\033[0m", philo);
 	pthread_mutex_lock(&philo->input->fork_mutex[philo->left_fork]);
-	print_action("has taken a fork", philo);
-	print_action("is eating", philo);
+	print_action("\033[33mhas taken a fork\033[0m", philo);
+	print_action("\033[31mis eating\033[0m", philo);
 	put_to_sleep(philo->input->eat_time, philo);
 	pthread_mutex_lock(&philo->input->last_meal);
 	philo->last_meal = get_time() - philo->input->start;
@@ -30,19 +30,20 @@ static void	eats(t_philo *philo)
 
 static void	sleeps(t_philo *philo)
 {
-	print_action("is sleeping", philo);
+	print_action("\033[32mis sleeping\033[0m", philo);
 	put_to_sleep(philo->input->sleep_time, philo);
 }
 
 static void	thinks(t_philo *philo)
 {
-	print_action("is thinking", philo);
+	print_action("\033[34mis thinking\033[0m", philo);
 }
 
 static void	*one_philo(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->input->fork_mutex[philo->right_fork]);
-	print_action("has taken a fork", philo);
+
+	print_action("\033[33mhas taken a fork\033[0m", philo);
 	put_to_sleep(philo->input->die_time, philo);
 	print_action("has died", philo);
 	pthread_mutex_unlock(&philo->input->fork_mutex[philo->right_fork]);
