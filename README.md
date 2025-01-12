@@ -2,6 +2,8 @@
 
 Philosophers project aims to implement a solution to the classic dining philosophers problem using only threads and mutexes.
 
+![](philosophers.gif)
+
 ## About the project
 
 The dining philosophers problem is a classic synchronization problem that illustrates the challenges of resource allocation and deadlock avoidance in a concurrent system. The problem involves a finite number of philosophers sitting around a table with a bowl of spaghetti. Each philosopher alternates between thinking and eating, but they require two forks to eat.
